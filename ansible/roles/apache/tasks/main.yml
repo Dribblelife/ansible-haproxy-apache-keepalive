@@ -1,0 +1,36 @@
+---
+# tasks file for apache
+- name: install httpd
+  yum:
+    name: httpd
+    state: present
+
+- name: copy index.html
+  copy:
+    content: "{{ ansible_facts['hostname'] }}"   #为了实验效果明显，将发布页
+    dest: /var/www/html/index.html
+
+- name: configure httpd
+  template:
+    src: httpd.conf.j2
+    dest: /etc/httpd/conf/httpd.conf
+    owner: root
+    group: root
+    mode: 644
+  notify: restart httpd
+
+- name: start httpd and firewalld
+  service:
+    name: "{{ item }}"
+    state: started
+  loop:
+    - httpd
+    - firewalld
+
+- name: configure firewalld
+  firewalld:
+    service: http
+    permanent: yes
+    immediate: yes
+    state: enabled
+

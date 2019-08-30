@@ -1,0 +1,3 @@
+---
+# vars file for apache
+http_port: 80

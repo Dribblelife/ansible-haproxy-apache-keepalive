@@ -1,0 +1,14 @@
+[lb]
+server1 STATE=MASTER VRID=100 PRIORITY=100
+server4 STATE=BACKUP VRID=100 PRIORITY=50
+
+[test]
+server2
+
+[proc]
+server3
+server4
+
+[webserver:children]
+test
+proc

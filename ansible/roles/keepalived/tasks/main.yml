@@ -1,0 +1,17 @@
+---
+# tasks file for keepalived
+- name: install keepalived
+  yum:
+    name: keepalived
+    state: present
+
+- name: configure keepalived
+  template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+  notify: restart keepalived
+
+- name: start keepalived
+  service: 
+    name: keepalived
+    state: started

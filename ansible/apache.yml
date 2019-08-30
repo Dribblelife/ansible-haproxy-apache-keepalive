@@ -1,0 +1,12 @@
+---
+- hosts: all
+  tasks:
+  - import_role:
+      name: apache
+    when: ansible_hostname in groups['webserver']
+  - import_role:
+      name: haproxy
+    when: ansible_hostname in groups['lb']
+  - import_role:
+      name: keepalived
+    when: ansible_hostname in groups['lb']
